@@ -1,0 +1,38 @@
+//normally file shoud just be author.js
+
+const express = require("express");
+const router = express.Router();
+// require Author model in orderr to use it for CRUD
+const Author = require("../models/Author"); 
+
+//GET - to display the form for creating the authors
+router.get("/authors/new", (req, res, next) => {
+  //make sure you see all the folders that are inside the "views" folders, you dont have to 
+  //specify the views folder
+  res.render("author-views/new-author")
+})
+
+//post routes to create a new author in the DB
+/* <form action="/authors/create" method="POST" > */
+router.post("/authors/create", (req, res, next) => {
+  console.log("the form: ", req.body)
+  Author
+  .create(req.body)
+  .then( newAuthor => console.log("NEW AUTHOR: ", newAuthor) )
+  .catch(err => console.log("Error while creating a new author: ", err));
+})
+
+router.get("/authors", (req, res, next) => {
+  Author
+  .find()
+  .then(authorsFromDB => res.render("author-views/allAuthors", {authors: authorsFromDB}))
+  .catch( err => console.log("error while getting the authors from the DB: ", err))
+})
+
+
+
+// in order to use routes anywhere else in this application, we have to export them
+module.exports = router;
+
+
+

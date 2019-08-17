@@ -1,0 +1,16 @@
+
+
+<div>
+  <h2>the books are: </h2>
+  <ul>
+
+    {{#each booksFromDB}}
+      <li> 
+        <a href="/books/{{this._id}}">{{this.title}}</a>
+         - {{this.rating}} <br>
+        {{this.description}}
+
+      </li>
+    {{/each}}
+  </ul>
+</div>
